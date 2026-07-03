@@ -14,5 +14,8 @@ venv/
 .DS_Store
 Thumbs.db
 
+# Sensitive data — contains private information, never commit or share
+data/sensitive data/data/
+
 # Data ignore patterns (optional)
 # data/raw/ 和 data/processed/ 按步骤手动添加，所以这里不 ignore
