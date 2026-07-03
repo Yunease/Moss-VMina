@@ -1,0 +1,9 @@
+---
+title: mess
+tags: [mess]
+mood: 焦躁
+mood_level: 3
+published: 2026-01-22T19:09:01
+---
+
+说真的，我对铺天盖地的广告没有任何好感，终末地你想干啥...
