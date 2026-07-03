@@ -19,3 +19,6 @@ data/sensitive data/data/
 
 # Data ignore patterns (optional)
 # data/raw/ 和 data/processed/ 按步骤手动添加，所以这里不 ignore
+
+# Generated JSONL files (regenerable from source)
+data/jsonl/qq_corpus.jsonl
