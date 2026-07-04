@@ -22,3 +22,5 @@ data/sensitive data/data/
 
 # Generated JSONL files (regenerable from source)
 data/jsonl/qq_corpus.jsonl
+data\05_corpus_jsonl\qq_corpus.jsonl
+data/03_prompted/qq_corpus.jsonl
