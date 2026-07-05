@@ -1,9 +1,0 @@
----
-title: mess
-tags: [mess]
-mood: 开心
-mood_level: 2
-published: 2026-01-22T05:00:00
----
-
-开发了个人博客，感觉效果很不错

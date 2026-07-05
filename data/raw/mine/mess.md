@@ -1,9 +1,0 @@
----
-title: mess
-tags: [mess]
-mood: 开心
-mood_level: 2
-published: 2026-01-20T21:09:01
----
-
-要是能谈一个玩宝可梦63单打实力与我不分上下的对象就好了

@@ -1,9 +1,0 @@
----
-title: mess
-tags: [mess]
-mood: 开心
-mood_level: 2
-published: 2024-02-24T23:42:01
----
-
-所谓人类，就是不听的在做  非常非常愚蠢的事情的 可爱的生物。
