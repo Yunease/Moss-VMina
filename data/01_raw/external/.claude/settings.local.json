@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python slice.py)",
+      "Bash(python3 *)",
+      "Bash(python *)"
+    ]
+  }
+}
