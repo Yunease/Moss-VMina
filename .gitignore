@@ -25,3 +25,13 @@ output/
 
 # Train/test split JSONL files (regenerable from pipeline)
 data/06_train_test_split/
+
+# Model weight files — too large for git (single file > 1GB), download separately
+*.safetensors
+*.pt
+*.pth
+*.bin
+rng_state.pth
+scheduler.pt
+optimizer.pt
+training_args.bin
