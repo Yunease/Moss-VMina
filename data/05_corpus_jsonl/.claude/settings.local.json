@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import sys,json; d=json.loads\\(sys.stdin.readline\\(\\)\\); print\\(d.keys\\(\\)\\)\")",
+      "Bash(python3 *)",
+      "Bash(python *)",
+      "Bash(mv \"D:\\\\Astro\\\\Moss VMina\\\\data\\\\05_corpus_jsonl\\\\check_category.py\" \"D:\\\\Astro\\\\Moss VMina\\\\scripts\\\\data_cleaning\\\\06_check_category.py\")",
+      "Bash(mv \"D:\\\\Astro\\\\Moss VMina\\\\data\\\\05_corpus_jsonl\\\\fill_category.py\" \"D:\\\\Astro\\\\Moss VMina\\\\scripts\\\\data_cleaning\\\\07_fill_category.py\")",
+      "Read(//d/Astro/Moss VMina/data/**)",
+      "Read(//d/Astro/Moss VMina/**)",
+      "Bash(pip install *)"
+    ]
+  }
+}

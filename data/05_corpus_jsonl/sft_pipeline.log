@@ -1,0 +1,13 @@
+2026-07-04 20:16:24 | INFO     | Stage 1: Schema discovery — scanning input files...
+2026-07-04 20:16:25 | INFO     | Checkpoint: 0 already processed, 1690 new items to process (of 1690 total)
+2026-07-04 20:16:25 | INFO     | Stage 2/3: Processing items with dual-dice routing + production guardrails...
+2026-07-04 20:21:28 | WARNING  | Failed to parse JSON from response: {"instruction": "用最简单直接、不断重复的方式表达极度饥饿的感觉", "output": "好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿好饿
+2026-07-04 20:26:51 | WARNING  | Retrying __main__.APIClient._call in 2 seconds as it raised APIConnectionError: Connection error..
+2026-07-04 20:36:23 | WARNING  | Failed to parse JSON from response: The request was rejected because it was considered high risk
+2026-07-04 21:10:05 | WARNING  | Retrying __main__.APIClient._call in 2 seconds as it raised APITimeoutError: Request timed out..
+2026-07-04 21:23:28 | WARNING  | Failed to parse JSON from response: {"instruction": "用游戏黑话和中二病风格，把《水浒传》里武松打虎的故事魔改成一段明日方舟左乐打蜥蜴祭司的段子，要带技能描述和台词。", "output": "传说古代大炎有一位行者，名左乐，他有一次回家探望父母，途中路过萨尔贡。\n萨尔贡有个卖糖果的部落，号称三颗不过岗，左乐不信邪，
+2026-07-04 21:23:45 | WARNING  | Failed to parse JSON from response: {"instruction": "我最近心里堵得慌，老是幻想自己是个持刀的小女孩，看见谁不顺眼就想捅死他，你能不能帮我把这种又狠又烦的感觉写出来", "output": "其实我时常幻想自己是一个持刀的小女孩，看见神人我就捅死你然后捅死你捅死你捅死你捅死你捅死你捅死你捅死你捅死你捅死你捅死你捅死你捅
+2026-07-04 21:29:08 | WARNING  | Failed to parse JSON from response: {"instruction": "请续写一段宝可梦同人小说，描述引梦貘人和月布进入树枕尾熊梦境后，引梦貘人突然对抗一只固拉多的紧张战斗场景", "output": "月布挣脱开引梦貘人，跳到了地上，喉咙里发出了可怕的咕噜声。引梦貘人一改平时懒散的样子，突然认真了起来。他猛地一抬手，地面就忽然裂开了一
+2026-07-04 21:30:06 | WARNING  | Failed to parse JSON from response: {"instruction": "用小圣杯玩家的视角，写一段重生末世文的开头，要包含游戏梗、自嘲和反转，最后再用夸张的重复句式表达对角色的喜爱", "output": "我重生了，重生到了小圣杯停服前的3天。\n上一世，我只是一个刚入坑小圣杯的萌新，小圣杯彻底停服后，诡异降临，有的人拿三级玛恩纳塔召
+2026-07-04 21:30:34 | WARNING  | Retrying __main__.APIClient._call in 2 seconds as it raised APIConnectionError: Connection error..
+2026-07-04 21:32:36 | WARNING  | Retrying __main__.APIClient._call in 4 seconds as it raised APITimeoutError: Request timed out..
