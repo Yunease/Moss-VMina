@@ -5,6 +5,9 @@ __pycache__/
 .venv/
 venv/
 
+# Environment variables — contains API keys, never commit
+.env
+
 # IDE
 .idea/
 .vscode/
@@ -15,12 +18,10 @@ venv/
 Thumbs.db
 
 # Sensitive data — contains private information, never commit or share
-data/sensitive data/data/
+data/sensitive data/
 
-# Data ignore patterns (optional)
-# data/raw/ 和 data/processed/ 按步骤手动添加，所以这里不 ignore
+# Large generated data — regenerable from pipeline, not tracked in git
+output/
 
-# Generated JSONL files (regenerable from source)
-data/jsonl/qq_corpus.jsonl
-data\05_corpus_jsonl\qq_corpus.jsonl
-data/03_prompted/qq_corpus.jsonl
+# Train/test split JSONL files (regenerable from pipeline)
+data/06_train_test_split/
