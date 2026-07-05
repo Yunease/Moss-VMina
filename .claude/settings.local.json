@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(awk '{s+=$1; d+=$2} END {print \"insertions:\", s, \"deletions:\", d}')",
+      "Bash(pip list *)",
+      "Bash(python -c ' *)",
+      "Bash(python *)",
+      "Bash(nvidia-smi)",
+      "Bash(pip index *)",
+      "Bash(python3 *)",
+      "Bash(grep -v '\\\\.sft_checkpoint\\\\.db$')",
+      "Bash(xargs -0 git rm)"
+    ]
+  }
+}
