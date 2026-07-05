@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import openai; import tenacity; import tqdm; print\\('All deps OK'\\)\")",
+      "Bash(pip3 list *)",
+      "Bash(pip list *)"
+    ]
+  }
+}

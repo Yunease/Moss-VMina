@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sort -t' ' -k1 -n)",
+      "Bash(python -c \"import markdown; import bs4; print\\('ok'\\)\")",
+      "Bash(pip install *)",
+      "Bash(python3 *)",
+      "Bash(python *)",
+      "Bash(/c/Users/26420/AppData/Local/Programs/Python/Python*/python.exe --version)",
+      "Bash(/e/python/python -m pip install pyyaml -q)",
+      "Bash(/e/python/python \"D:/Astro/Moss VMina/data/02_Semantic Parsing/count_yaml_fields.py\")"
+    ]
+  }
+}

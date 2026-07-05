@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python scripts/process.py)",
+      "Bash(grep -rn \"get_input\\\\|playerPut\\\\|temp_str\\\\|playerNAme\\\\|^\\\\s*<#>\\\\|^\\\\s*;.*$\\\\|^\\\\s*jump\\\\s\" \"D:/Astro/Moss VMina/data/02_Semantic Parsing/同人小说/别玩galgame了/splits/\")"
+    ]
+  }
+}
