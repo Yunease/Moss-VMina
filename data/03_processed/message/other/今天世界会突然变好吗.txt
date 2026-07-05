@@ -1,0 +1,8 @@
+---
+title: mess
+tags: [mess]
+mood: 消沉
+mood_level: 2
+published: 2024-02-29 09:09:00
+---
+今天世界会突然变好吗，会吗？

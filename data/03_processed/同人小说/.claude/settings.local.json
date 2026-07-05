@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import yaml; print\\('yaml ok'\\)\")",
+      "Bash(python -c \"import yaml; print\\('yaml ok'\\)\")",
+      "Bash(python *)"
+    ]
+  }
+}
