@@ -1,0 +1,8 @@
+---
+title: day3_2_2
+tags: [剧, 本]
+category: 剧本
+collection: 别玩galgame了
+---
+”
+playerName：“行，没问题。”

@@ -1,0 +1,40 @@
+---
+title: 网易云音乐听歌排行爬虫：用Python轻松获取你的听歌排行_4
+tags: [python, 博客文章, 计算机网络, 精选]
+category: 学习
+published: 2026-05-12T23:14:27
+---
+if __name__ == '__main__':
+uid = input("请输入用户ID: ")
+
+print("1. 爬取数据...")
+songs = scrape_netease_music(uid)
+print(f"   获取到 {len(songs)} 首歌曲")
+
+print("2. 保存CSV...")
+save_to_csv(songs)
+
+print("3. 下载图片...")
+download_images(songs)
+
+print("4. 生成Markdown...")
+generate_markdown()
+
+print("\n完成！请将 netease_images 目录中的图片上传到图床")
+print("然后更新 netease_music.csv 中的音乐图片列")
+
+八、示范CSV
+以下是示范的CSV文件内容（3行）：
+排名,音乐名,歌手,专辑,音乐图片,音乐链接
+1,LoFi Rain in the Shed,"Big Sounds, Rainy Sounds, Sleepy Times",Nighttime Lullabies: Sleepy Heavy Rain,https://fake-image-host.example.com/1.png,https://music.163.com/song?id=1406753793
+2,戦闘!ウルトラネクロズマ,"増田順一, 一之瀬剛",ポケモン ウルトラサン・ウルトラムーン Ultra Music Collection,https://fake-image-host.example.com/2.png,https://music.163.com/song?id=1352540494
+3,Firewood,Tv Resource Studio,Sound Effects for Movies. Sounds Resources for Your Videos Vol. 3 People and Inside,https://fake-image-host.example.com/3.png,https://music.163.com/song?id=548615041
+
+九、总结
+通过本文，我们实现了：
+1. 使用Python爬取网易云音乐听歌排行
+2. 下载封面图片并上传到图床
+3. 生成带有图片和链接的Markdown文件
+这个工具可以帮助我们记录和分享自己的音乐喜好，也可以作为个人音乐档案的备份。
+完整代码和示例文件可以在项目仓库中找到。
+Yunease/NeteaseCloudMusic-Rank: 爬取网易云音乐用户听歌排行，生成带有封面图片的Markdown文件

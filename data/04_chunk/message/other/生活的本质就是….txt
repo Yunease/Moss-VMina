@@ -1,0 +1,8 @@
+---
+title: mess
+tags: [mess]
+mood: 消沉
+mood_level: 2
+published: 2023-11-27 17:26:00
+---
+生活的本质就是…为了体验新鲜的事情而不停的重复做不新鲜的事情

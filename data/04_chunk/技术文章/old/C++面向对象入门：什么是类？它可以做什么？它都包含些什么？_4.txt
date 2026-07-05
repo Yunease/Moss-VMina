@@ -1,0 +1,77 @@
+---
+title: C++面向对象入门：什么是类？它可以做什么？它都包含些什么？_4
+tags: [博客文章, c++]
+published: 2024-12-14T16:39:01
+---
+e << endl;
+}
+
+int main()
+{
+Pokemon togekiss;
+tellNature(togekiss);
+return 0;
+}
+
+现在Pokemon类中有友元函数了，事实上也许会有很多宝可梦，为了准确的获取具体的信息，我们应该告诉友元函数自己的目标对象，因此需要传递一个对象。
+在这里，我们给tellNature函数了一个togekiss对象，它就能正确的调出togekiss的性格了！可以直接访问类的private，这就是友元函数的魔力。（所以说友谊是魔法啊！）
+友元函数可以在不暴露类内部的具体情况的条件下就访问类内部的细节，在一定意义上可以增强灵活性。
+好啦，现在，你和togekiss是真正的好朋友了，试着用写一个友元函数让她告诉你自己的等级吧。
+七.特殊指针this
+如果你写过JavaScript，一定对this不陌生，十分方便但是容易看头晕的关键字，它用于指向当前对象的实例。
+
+在 C++ 中，this 指针是一个隐式的指针，它指向当前对象的地址。每当一个成员函数被调用时，this 指针会自动传递给成员函数，指向调用该成员函数的对象。你可以使用 this 指针来访问当前对象的成员变量和成员函数。
+
+Pokemon的类写的有点太多了，我们暂时不用它，来写个New_baby类吧。
+试想一下，在玩星露谷物语的时候，你养的牛生了一头小牛，新生命的诞生真是一件令人欢喜的事情，不过为了登记在信息栏里，我们需要知道这头小牛的一些信息：
+class New_baby{
+public:
+string name;
+string sex;
+New_baby(string name,string sex)
+{
+this->name = name;
+this->sex = sex;
+cout<< this->name + " " + this->sex <<endl;
+}
+};
+
+小牛出生后，我们要在对象里记录这只牛的名字，肯定是构造函数啦。
+勤劳的你又发现，类的变量名居然和构造函数传入的变量名一样，那这个时候要是能区分一下就好了。这时候，this指针就能发挥作用。它指向对象，能够完成赋值的操作，在下面的打印里，也尝试使用以下this指针来代替.吧！
+八.小结
+当然！类包含的东西可不仅仅只有这些，如果你继续学习，会接触到虚函数，静态成员，重载函数，重写函数，常量成员函数之类。
+但无论如何，面向对象的种子已经扎根在你的知识库里了，接下来多上手写写东西吧！
+如果你是资深的大佬，我很荣幸能让您读这一篇拙作，不管您有如何看法，我都很愿意接受您的批评指导。
+如果你是和我差不多的学生，希望这篇文章能让你回忆起一些可能会疏漏掉的内容，能够帮助到你。
+如果你是一点基础也没有的萌新，也没关系的，就算没看懂也要鼓励你，能一口气读这么多字已经很厉害了！！！加油，计算机的一切都是人类创造的，就和动漫的世界一样，这是多么浪漫的事情啊，相信你也一定能够用心创造魔法的！
+如果只是看个乐呵，我也很高兴自己闲暇时写的东西能让人觉得眼前一亮。
+附录
+源代码：
+#include<iostream>
+
+using namespace std;
+
+//class Pokemon
+//{
+//public:
+//    int grade;
+//    string attribute;
+//    Pokemon()
+//    {
+//      my_nature = "胆小";
+//      grade = 100;
+//      attribute = "妖精 飞行";
+//  }
+//  Pokemon(const Pokemon &p)
+//  {
+//      grade = p.grade;
+//      attribute = p.attribute;
+//      my_nature = p.my_nature;
+//  }
+//    void getNature(string nature)
+//    {
+//        cout << my_nature <<endl;
+//    }
+//    friend void tellNature(Pokemon& p);
+//private:
+//    string my_na

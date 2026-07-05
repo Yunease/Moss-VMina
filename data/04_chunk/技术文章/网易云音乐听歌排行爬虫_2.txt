@@ -1,0 +1,103 @@
+---
+title: 网易云音乐听歌排行爬虫：用Python轻松获取你的听歌排行_2
+tags: [python, 博客文章, 计算机网络, 精选]
+category: 学习
+published: 2026-05-12T23:14:27
+---
+ '音乐链接'])
+
+for song in songs:
+music_link = f"https://music.163.com/song?id={song['id']}"
+writer.writerow([
+song['rank'],
+song['name'],
+song['artist'],
+song['album'],
+song['pic_url'],
+music_link
+])
+
+4. 生成Markdown
+def generate_markdown(csv_file, md_file):
+songs = []
+with open(csv_file, 'r', encoding='utf-8-sig') as f:
+reader = csv.DictReader(f)
+for row in reader:
+songs.append(row)
+
+with open(md_file, 'w', encoding='utf-8') as f:
+f.write("# 🎵 我的网易云音乐听歌排行\n\n")
+f.write("## 🎶 听歌排行\n\n")
+f.write("| 音乐图片 | 音乐名 | 歌手 | 专辑 |\n")
+f.write("|:--------:|:------|:-----|:-----|\n")
+
+for song in songs:
+pic_md = f"![{song['排名']}]({song['音乐图片']})"
+f.write(f"| {pic_md} | [{song['音乐名']}]({song['音乐链接']}) | {song['歌手']} | {song['专辑']} |\n")
+
+四、使用方法
+1. 安装依赖
+pip install requests
+
+2. 运行爬虫
+python scrape_netease.py
+
+3. 上传图片
+将下载的图片上传到图床（如 https://fake-image-host.example.com）
+4. 更新链接
+更新CSV中的图片链接为图床链接
+5. 生成Markdown
+python generate_markdown.py
+
+五、注意事项
+
+API限制: 该API是公开的，但频繁请求可能会被限制，建议添加延时
+图片处理: 网易云音乐的图片URL有时效性，建议下载后上传到稳定的图床
+编码问题: CSV文件使用 utf-8-sig 编码，确保中文正常显示
+特殊字符: 歌曲名中的 | 需要转义为 \|
+
+六、效果展示
+生成的Markdown文件效果如下：
+
+音乐图片
+音乐名
+歌手
+专辑
+
+example.com/1.png
+歌曲名
+歌手
+专辑名
+
+七、完整代码
+以下是完整的Python脚本代码：
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import requests
+import csv
+import os
+
+def scrape_netease_music(uid):
+"""爬取网易云音乐用户听歌排行"""
+url = f"https://music.163.com/api/v1/play/record?uid={uid}&type=0"
+headers = {
+'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+
+songs = []
+for i, item in enumerate(data['allData'], 1):
+song = item['song']
+songs.append({
+'rank': i,
+'name': song['name'],
+'id': song['id'],
+'artist': ', '.join([ar['name'] for ar in song['ar']]),
+'album': song['al']['name'],
+'pic_url': song['al']['picUrl']
+})
+
+return

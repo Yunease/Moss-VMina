@@ -1,0 +1,41 @@
+---
+title: Godot2d拖拽窗口时窗口异常闪现及无法正确释放问题的结局办法_2
+tags: [博客文章, godot]
+published: 2025-11-06T15:48:01
+---
+
+修改后的代码如下：
+extends Node2D
+
+# 记录鼠标点击时的全局位置（屏幕坐标系）
+var click_mouse_global: Vector2i = Vector2i.ZERO
+# 记录点击时窗口在屏幕上的位置
+var click_window_pos: Vector2i = Vector2i.ZERO
+# 拖拽状态
+var is_dragging: bool = false
+
+func _process(_delta: float) -> void:
+if is_dragging:
+# 获取当前鼠标在屏幕上的绝对位置（与窗口无关的全局坐标）
+var current_mouse_global = DisplayServer.mouse_get_position()
+# 计算鼠标移动的差值（相对于点击时的位置）
+var delta = current_mouse_global - click_mouse_global
+# 用窗口初始位置 + 移动差值更新窗口位置
+get_window().position = click_window_pos + delta
+
+# Area2D的输入事件回调（确保已在编辑器中绑定此信号）
+func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+# 只处理鼠标按键事件
+if event is InputEventMouseButton:
+# 仅关注鼠标左键
+if event.button_index == MOUSE_BUTTON_LEFT:
+# 鼠标左键按下：开始拖拽
+if event.pressed:
+# 记录鼠标在屏幕上的绝对位置（关键：用DisplayServer获取，而非event.global_position）
+click_mouse_global = DisplayServer.mouse_get_position()
+# 记录当前窗口在屏幕上的位置
+click_window_pos = get_window().position
+is_dragging = true
+# 鼠标左键释放：结束拖拽
+else:
+is_dragging = false

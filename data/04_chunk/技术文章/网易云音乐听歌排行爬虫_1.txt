@@ -1,0 +1,97 @@
+---
+title: 网易云音乐听歌排行爬虫：用Python轻松获取你的听歌排行_1
+tags: [python, 博客文章, 计算机网络, 精选]
+category: 学习
+published: 2026-05-12T23:14:27
+---
+
+网易云音乐听歌排行爬虫：用Python轻松获取你的听歌排行
+
+本文介绍如何使用Python爬取网易云音乐的听歌排行，并生成带有封面图片的Markdown文件。
+
+一、前言
+网易云音乐是我们常用的音乐平台之一，每个人的听歌排行都记录着我们的音乐品味。今天，我将分享如何使用Python爬取网易云音乐的听歌排行，并生成一个带有封面图片的Markdown文件，方便我们记录和分享自己的音乐喜好。
+
+二、实现思路
+1. 数据获取
+网易云音乐提供了一个公开的API接口，可以直接获取用户的听歌排行数据：
+https://music.163.com/api/v1/play/record?uid={用户ID}&type=0
+
+uid: 用户ID，从用户主页URL获取
+type: 数据类型，0 表示所有时间，1 表示最近一周
+
+2. 数据解析
+API返回的JSON数据包含了我们需要的所有信息：
+{
+"allData": [
+{
+"song": {
+"name": "歌曲名",
+"id": 123456,
+"ar": [{"name": "歌手"}],
+"al": {
+"name": "专辑名",
+"picUrl": "http://p1.music.126.net/xxx.jpg"
+}
+}
+}
+]
+}
+
+3. 图片处理
+由于网易云音乐的图片URL有时效性，我们需要：
+1. 下载封面图片到本地
+2. 上传到图床（如 https://fake-image-host.example.com）
+3. 更新CSV中的图片链接
+4. 生成Markdown
+最后，我们将数据生成一个带有图片和链接的Markdown表格。
+
+三、核心代码
+1. 爬取数据
+import requests
+
+def scrape_netease_music(uid):
+url = f"https://music.163.com/api/v1/play/record?uid={uid}&type=0"
+headers = {
+'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+
+songs = []
+for i, item in enumerate(data['allData'], 1):
+song = item['song']
+songs.append({
+'rank': i,
+'name': song['name'],
+'id': song['id'],
+'artist': ', '.join([ar['name'] for ar in song['ar']]),
+'album': song['al']['name'],
+'pic_url': song['al']['picUrl']
+})
+
+return songs
+
+2. 下载图片
+import os
+
+def download_images(songs, output_dir='netease_images'):
+os.makedirs(output_dir, exist_ok=True)
+
+for song in songs:
+rank = song['rank']
+pic_url = song['pic_url']
+filename = f'{output_dir}/{rank}.png'
+
+response = requests.get(pic_url)
+with open(filename, 'wb') as f:
+f.write(response.content)
+
+3. 保存CSV
+import csv
+
+def save_to_csv(songs, filename='netease_music.csv'):
+with open(filename, 'w', newline='', encoding='utf-8-sig') as f:
+writer = csv.writer(f)
+writer.writerow(['排名', '音乐名', '歌手', '专辑', '音乐图片',

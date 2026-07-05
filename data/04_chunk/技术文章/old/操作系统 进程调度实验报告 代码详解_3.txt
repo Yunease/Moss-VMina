@@ -1,0 +1,106 @@
+---
+title: 操作系统 进程调度实验报告 代码详解_3
+tags: [博客文章, C语言]
+published: 2024-10-29T21:36:01
+---
+的进程来执行*/
+{
+struct pcb *p,*q;
+int max;
+p=head->next;
+max=p->priority;/*初始max为队首结点的优先级*/
+q=p;
+while(p)
+{
+if(p->priority>max)/*逐一比较，选出优先级最大的结点*/
+{max=p->priority;
+q=p;}
+p=p->next;
+}
+return q;
+}
+
+void deletepc(struct pcb *head,struct pcb *run)/*此函数用来将运行完的进程删除出进程队列*/
+{
+struct pcb *q=head;
+
+while(q->next)/*扫描进程队列，找到执行完了的进程*/
+{
+if(q->next->num==run->num)/*判断是不是已完成的进程*/
+{
+if(run->next!=NULL)
+q->next=run->next;
+else q->next=NULL;
+free(run);/*释放申请的空间*/
+return;
+}
+q=q->next;
+}
+
+}
+
+void control()/*此函数是用来控制各个进程的执行和调度*/
+{
+struct pcb *p;
+/*run=head->next;初始让第一个进程运行*/
+run=getmaxpriority(head);
+run->state=RUN;
+while(run)
+{
+if(run->cputime>0)
+{printf("pcb%d is running.priority=%d,cputime=%d\n",run->num,run->priority,run->cputime);
+printf("Ready list:");/*显示整个就绪队列*/
+p=head->next;
+while(p)
+{
+if(p!=run)
+printf("pcb%d,priority=%d,cputime=%d  ",p->num,p->priority,p->cputime);
+p=p->next;
+}
+printf("\n");
+
+Sleep(5);/*模拟进程运行*/
+run->cputime--;/*进程需要时间减一*/
+run->priority--;/*进程优先级减一*/
+run=getmaxpriority(head);/*从进程队列中挑选一个优先级最大的进程来运行*/
+run->state=RUN;
+}
+else
+{ printf("pcb%d is finished.\n",run->num);
+Sleep(2);
+deletepc(head,run);/*删除该结点*/
+if(head->next!=NULL)/*判断进程队列是不是为空*/
+{ run=getmaxpriority(head);/*从进程队列中挑选一个优先级最大的进程来运行*/
+run->state=RUN;}
+else
+{printf("All progresses are done.\n");
+
+return;}
+}
+}
+}
+
+main()
+{
+int n;
+int flag=1;
+
+printf("Enter the number of the progresses:");
+scanf("%d",&n);/*输入要创建的进程的数量*/
+
+head=creatpc(n);/*创建进程队列，将链表的表头赋给head指针*/
+run=head->next;/*run指针指向正在运行的进程的pcb*/
+while(run)
+{
+printf("num: %d ,priority: %d ,need cputime: %d \n",run->num,run->priority,run->cputime);
+
+run=run->next;
+} /*将刚创建的进程队列打印出来*/
+while(flag)/*由flag的值判断是否继续执行control()函数*/
+{
+if(head->next)/*判断进程是否完成*/
+control();
+else flag=0;
+}
+getch();
+}

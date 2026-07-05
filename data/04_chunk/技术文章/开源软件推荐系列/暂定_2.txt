@@ -1,0 +1,116 @@
+---
+title: 记忆管理_2
+tags: [博客文章, 开源软件, 精选]
+category: 学习
+collection: '开源软件推荐系列'
+published: 2026-07-02T23:57:01
+---
+部分信息是由ai直接判断该信息为长期记忆，部分信息是短期记忆被频繁提起（假设 权>x && decay_factor>y && access_count  >z && last_visit_time == today ），那么短期记忆会被写入长期记忆表中（此时直接删除短期记忆条）
+由于长期记忆不再被遗忘，因此不会设置与遗忘有关的字段，整个表会简单很多：
+
+id
+session_id
+content
+important
+create_time
+fact_time
+confidence
+emotion
+
+1
+1
+{user}认为原神不牛逼
+0.1
+2026-07-20
+2026-07-20
+0.95
+1
+
+但是，实际上的ai对话中，并不会真正使用这个表，而是把这个表转换为rag数据库，查找rag，这样性能可以得到大幅度的提升。
+People 人物角色表
+特点：记录用户的人际关系，当用户吐槽某个人的时候，如果有记忆，ai能够立刻知道这个人大概是什么样的。
+人物角色表的遗忘机制比较特殊，认为一个角色在事实描述中已经不再联系了，那么会修改 is_contact 字段，当ai发现两个称呼接近的角色时，会优先考虑 is_contact 为1的角色。
+结构如下：
+
+id
+character_name
+alias_list
+gender
+age_desc
+identity
+character_tags
+advantage_tags
+disadvantage_tags
+related_event_list
+sentiment_code
+confidence
+create_time
+relation_type
+is_contact
+
+1
+小王
+["王哥","隔壁小王"]
+1
+20 多岁
+同部门后端同事
+["开朗","热心"]
+["乐于帮忙改 bug","奶茶经常请客"]
+["拖延症严重","开会容易走神"]
+["上周接口报错陪我加班调试到 20 点","团建组队一起打游戏","上次帮我领取办公设备"]
+[2]
+0.93
+2026-06-12
+1
+1
+
+字段名
+说明
+
+id
+自增主键，人物记录唯一标识
+
+character_name
+人物标准主名称，统一基准称呼
+
+alias_list
+JSON 数组，存储外号、别称、其他叫法，用于模糊匹配识别同一人
+
+gender
+性别编码：1 = 男，2 = 女，3 = 未知
+
+age_desc
+年龄文字描述，兼容模糊表述（20 多岁 / 中年 / 学生等）
+
+identity
+人物身份、职业、所属关系定位
+
+character_tags
+JSON 数组，存储性格标签，结构化提取人物特质
+
+advantage_tags
+JSON 数组，单独存储该人物优点，方便 AI 正向评价调取
+
+disadvantage_tags
+JSON 数组，单独存储该人物缺点，吐槽场景优先匹配
+
+related_event_list
+JSON 数组，存储和此人发生过的所有相关事件，支持持续追加新增经历
+
+sentiment_code
+JSON 数字数组，记录你对该人物长期情绪倾向：1 平淡、2 好感、3 反感
+
+confidence
+画像置信度 0~1，代表提取到的人物信息可靠程度
+
+create_time
+这条人物档案初次入库时间
+
+relation_type
+关系类型：1 = 长期稳定关系，2 = 短期临时关系。
+
+is_contact
+是否仍有来往：1 正常联络，0 已断联，断联会加速记忆权重衰减
+
+Reflection AI总结表：
+特点：这个表只记录每天发生的事实，不记录用户的观点。

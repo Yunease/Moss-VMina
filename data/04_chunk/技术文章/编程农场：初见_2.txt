@@ -1,0 +1,80 @@
+---
+title: 编程农场：初见_2
+tags: [python, 游戏]
+category: 学习
+published: 2026-06-11T22:37:27
+---
+
+它的完整写法是：for xxx in range(a,b,c) ，你或许注意到了 _ ，有点类似JavaScript的匿名函数，这是一个匿名变量，代表我们只使用它参与循坏，而不进行其他使用，非常方便。
+这句代码的意思是，使一个变量（_）在遍历中，从a到b，每次+c
+说白了，这不是就是 for( int x = a; x < b; x += c ) 吗？
+其实我还是觉得c的语法比较优美，python系的语法看起来怪怪的（以及我感觉 || 比 or 帅多了！）
+遍历完毕了！现在我们要进行初始化了，对于每一块土地，我们应该进行这样的判定：
+
+如果有作物->收获
+如果本格是耕作过的土地（Soil），进行耕作，恢复成原本的样子。
+
+代码也非常简单：
+x_max = get_world_size()
+y_max = get_world_size()
+
+while True:
+for _ in range(y_max):
+for _ in range(x_max):
+x = get_pos_x()
+y = get_pos_y()
+if can_harvest():
+harvest()
+if get_ground_type() == Grounds.Soil:
+till()
+move(East)
+if x >= x_max-1:
+move(North)
+
+不过，这段代码写的比较糟糕，维护性也比较差。
+其实可以把固定的移动次数和地图大小完全解耦：
+x_max = get_world_size()
+y_max = get_world_size()
+
+while True:
+x = get_pos_x()
+y = get_pos_y()
+if can_harvest():
+harvest()
+if get_ground_type() == Grounds.Soil:
+till()
+move(East)
+if x >= x_max-1:
+move(North)
+
+此外，AI给了另一种版本：
+x_max = get_world_size()
+y_max = get_world_size()
+
+while True:
+for y in range(y_max):
+for x in range(x_max):
+if can_harvest():
+harvest()
+if get_ground_type() == Grounds.Soil:
+till()
+if x < x_max-1:
+move(East)
+if y < y_max:
+move(East)
+move(North)
+
+AI给的代码中，不仅减少了 get_world_size() 的调用频率（仅剩1次），而且对x和y的移动进行了解耦。
+但是，这段代码就完全没有问题吗？
+事实上，尽管性能更加出色，但我更喜欢上面的版本，因为每次都要获取x和y的实时位置，这意味着无论无人机在什么位置开始，位置都是正确的。
+而第二个版本的代码，则严格要求必须在(0,0)开始才正确，否则会出错：
+由于遍历是x_max次（即地图长度），在目前的地图中，固定为6次。但如果坐标是从(2,2)开始，那么在第一个循环中：
+# 这里用了一种伪代码的写法：
+# 在这个循环中，x需要位移6次
+for y=0 in range(y_max):
+for x=0 in range(x_max):
+# 但实际上，2+6 = 2，进行完毕后x回到2
+if x < x_max-1:
+pass
+# 但由于 move north嵌在x循环中，所以y的偏移也随着错了。
+# 这意味着后续的所有x和y都会错位。

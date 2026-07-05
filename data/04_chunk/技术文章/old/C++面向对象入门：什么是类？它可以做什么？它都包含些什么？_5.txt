@@ -1,0 +1,62 @@
+---
+title: C++面向对象入门：什么是类？它可以做什么？它都包含些什么？_5
+tags: [博客文章, c++]
+published: 2024-12-14T16:39:01
+---
+ture;
+//};
+//
+//void tellNature(Pokemon& p)
+//{
+//  cout << p.my_nature << endl;
+//}
+//
+//int main()
+//{
+//  Pokemon togekiss;
+////    togekiss.getNature("大胆");
+////    cout << togekiss.attribute << endl;
+//  cout << togekiss.grade << endl;
+////    tellNature(togekiss);
+//  Pokemon ditto = togekiss;
+//  cout<< "百变怪的等级是：" << ditto.grade <<endl;
+//  return 0;
+//}
+
+//class Helicopter
+//{
+//public:
+//    Helicopter()
+//    {
+//        cout << "孩子们我会开直升机" << endl;
+//    }
+//    ~Helicopter()
+//    {
+//        cout << "manba out!";
+//    }
+//};
+//
+//int main()
+//{
+//  Helicopter* CXK = new Helicopter();
+//  delete CXK;
+//  return 0;
+//}
+
+class New_baby{
+public:
+string name;
+string sex;
+New_baby(string name,string sex)
+{
+this->name = name;
+this->sex = sex;
+cout<< this->name + " " + this->sex <<endl;
+}
+};
+
+int main()
+{
+New_baby* coco = new New_baby("coco","girl");
+return 0;
+}

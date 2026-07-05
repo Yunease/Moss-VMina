@@ -1,0 +1,25 @@
+---
+title: godot基础：Pong_2
+published: 2026-04-08T09:54:01
+tags: [博客文章, godot]
+category: '开发日志'
+---
+
+var = init_position
+
+func _ready():
+init_postition = position
+pass
+
+func _process(delta):
+#前略
+if position.x > 500 :
+self.rest()
+#也可以省略self，不过写上去更清晰。
+
+func rest():
+position = init_position
+
+常识积累
+1152，648
+这是godot默认的窗口大小，设置这个值，就可以让背景板恰好铺满窗口，是非常常用的测试参数。

@@ -1,0 +1,20 @@
+---
+title: 破解学习通鼠标移出屏幕自动暂停视网课播放_2
+tags: [博客文章]
+published: 2024-12-03T22:47:01
+---
+n.push("}, " + i.buffer + ");")
+}
+n.push("return result;");
+o = Ext.cacheableFunctionFactory("e", "options", "fn", "scope", "ename", "dom", "wrap", "args", "X", "evtMgr", n.join("\n"))
+}
+return o.call(p, s, i, m, l, j, p, k, q, Ext, a)
+};
+return k
+},
+
+是把，，，挺复杂的，反正好多我是看不懂，但是不难猜出来，如果鼠标超过了浏览器边框，freezeEvent则会生效，虽然没办法定位具体是哪里实现这个功能的，但大概是暂停了视频吧。
+
+chatgpt表示：ExtJS 动态生成的事件包装器：为 mouseout 等 DOM 事件注入防抖、延迟、事件代理和标准化处理。
+
+就这样解决了，，，大家也要好好复习期末！

@@ -1,0 +1,106 @@
+---
+title: C++面向对象入门：什么是类？它可以做什么？它都包含些什么？_2
+tags: [博客文章, c++]
+published: 2024-12-14T16:39:01
+---
+虽然别人不能使用私有内容，但类本身是可以使用自己的私有内容的。
+我们补全main函数，试着看看这只谨慎的宝可梦会不会告诉我们自己的性格：
+int main()
+{
+Pokemon togekiss;
+togekiss.getNature("大胆");
+return 0;
+}
+
+输出结果：
+
+显而易见，这只谨慎的宝可梦在知道了我们的性格后，最终还是告诉了你她的性格，现在就成为好朋友啦！
+不过，Pokmon(){}又是个什么鬼哇！这个函数怎么没有类型呢！
+三.构造函数
+一般的函数其实是个很被动给的东西，就好比上面的getNature函数，如果不是外部主动的调用，永远也不会有人知道你的性格是什么。
+那有没有什么不需要主动调用也能够产生效果的函数呢？
+没错！就是——构造函数！
+
+C++ 中的 构造函数（Constructor）是一种特殊的成员函数，用于在创建对象时初始化对象的成员变量。构造函数的名称与类的名称相同，并且没有返回类型。它在对象被创建时自动调用，通常用于为对象的成员变量分配初始值。
+
+当我们的类进行实例化变为对象后，它就自动的完成了构造函数，构造函数非常特殊，为了和其他函数做区分，它不仅没有返回值，而且函数名和类的名称完全相同。
+在刚才的Pokemon(){}中，我们就对my_nature进行了初始化，让它的性格初始化为胆小。除了进行初始化，还可以执行一些功能，不过这部分就留给你自己探索吧！试试构造函数里都能写一些什么有趣的东西！
+#include<iostream>
+
+using namespace std;
+
+class Pokemon
+{
+public:
+int grade;
+string attribute;
+Pokemon()
+{
+my_nature = "胆小";
+grade = 100;
+attribute = "妖精 飞行";
+}
+void getNature(string nature)
+{
+cout << my_nature <<endl;
+}
+private:
+string my_nature;
+};
+
+int main()
+{
+Pokemon togekiss;
+togekiss.getNature("大胆");
+cout << togekiss.attribute << endl;
+cout << togekiss.grade << endl;
+return 0;
+}
+
+补全main函数，感受一下直接输出public内容和使用成员函数输出private内容的区别。
+输出结果：
+
+四.拷贝构造函数
+变量和变量之间的赋值相当容易，但对象和对象赋值就会麻烦很多，既然是copy，就需要有用来复制的对象，拷贝构造函数大概可以看成这样：
+
+既然需要进行拷贝操作，那么新建立的对象就需要提供给一个对象才能调用拷贝构造函数，拷贝构造函数本身就必然需要一个对象参数才可以！
+试着写一写：
+现在有一个好奇的百变怪，它使用了变身技能，变化成了波克基斯的样子，于是就有了：
+class Pokemon
+{
+public:
+int grade;
+string attribute;
+Pokemon()
+{
+my_nature = "胆小";
+grade = 100;
+attribute = "妖精 飞行";
+}
+Pokemon(const Pokemon &p)
+{
+grade = p.grade;
+attribute = p.attribute;
+my_nature = p.my_nature;
+}
+void getNature(string nature)
+{
+cout << my_nature <<endl;
+}
+friend void tellNature(Pokemon& p);
+private:
+string my_nature;
+};
+
+void tellNature(Pokemon& p)
+{
+cout << p.my_nature << endl;
+}
+
+int main()
+{
+Pokemon togekiss;
+cout << togekiss.grade << endl;
+Pokemon ditto = togekiss;
+cout<< "百变怪的等级是：" << ditto.grade <<endl;
+retur

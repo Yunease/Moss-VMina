@@ -1,0 +1,63 @@
+---
+title: 初识renpy_2
+published: 2026-02-10T14:12:01
+tags: [博客文章]
+category: '开发日志'
+---
+目录名忽略，只使用文件名定义图像名。这一点比webgal方便很多。
+heid 语句：用来隐藏图像。
+例如：
+label leaving:
+v "如你所愿"
+hide sylvie
+m "人呢！！"
+
+注意， sence 语句会直接清除场景，所以不用特别写 hide 。
+image 语句的写法类似宏定义，但是image不会使用renpy默认的参数，需要玩家自己定义。
+image logo = "renpy logo.png"
+image happy = "happy.png"
+
+转场
+在两个场景之间，直接切换的效果非常生硬。转场发生最后一个交互（点击对话等）等到下一个scene show或hide之间。
+label scene5:
+scene bg meadow
+with fade
+v "楼阁上的浮灰......"
+"她没有玩笑的意味"
+show sylvie green smile
+with dissolve
+v "我会回应你的期许，憎恨也会如约而至。"
+
+这里的 with 语句决定了转场使用的效果，最常用的是 dissolve 和 fade 。
+如果存在多个scene、show、hide，那么在其之后的转场对其上所有语句都生效了。
+scene bg meadow
+show sylvie green smile
+with dissolve
+
+“bg meadow”和“sylvie green smile”图像会同时使用dissolve转场。如果想要每次只让其中之一使用dissolve转场，你需要写两个转场语句：
+scene bg meadow
+with dissolve
+show sylvie green smile
+with dissolve
+
+场景meadow里有第一个dissolve效果，而角色sylvie里有第二个dissolve效果。如果你想要立刻展现meadow场景，然后使用转场效果展现角色sylvie，你可以这样写：
+scene bg meadow
+with None
+show sylvie smile
+with dissolve
+
+这里的“None”被用于标识一个特殊转场效果，对玩家来说主界面没有产生任何特殊效果。
+位置（position）
+图像在展示时默认水平居中，图像底部与界面底部相接。这样设计通常对背景和单个角色没问题，但当界面上需要展现1个以上角色时，重新调整图像位置也是十分合理的。同样，基于剧情需要，调整单一角色的图像位置也可以理解。
+show sylvie green smile at right
+
+为了重新调整图像位置，需要在show语句中添加一个at分句。at分句指定了图像的展示位置。Ren’Py中包含了多个域定义的位置关键字: left 表示界面左端， right 表示屏幕右端， center 表示水平居中(默认位置)， truecenter 表示水平和垂直同时居中。
+当然你可以自定义位置关键字。
+音乐和音效
+大多数Ren’Py游戏都会播放背景音乐。音乐播放需要使用play music语句。play music语句将语句中指定的文件名识别为一个音频文件并播放。Ren’Py跟识别音频文件名并在game目录下寻找关联文件。音频文件应该是opus、ogg vorbis或者mp3格式的文件。
+play music "audio/illurock.ogg"
+
+更换音乐时，我们可以使用一个fadeout and fadein分句，fadeout and fadein分句用于旧音乐的淡出和新音乐的淡入。
+play music "audio/illurock.ogg" fadeout 1.0 fadein 1.0
+
+queue music语句表示，在当前音乐播放完毕后播放的音频文件。

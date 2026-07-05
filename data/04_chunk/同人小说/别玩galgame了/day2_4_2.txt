@@ -1,0 +1,9 @@
+---
+title: day2_4_2
+tags: [剧, 本]
+category: 剧本
+collection: 别玩galgame了
+---
+”
+playerName：“再见——”
+诗怜（微笑）：“再见。（小声）”

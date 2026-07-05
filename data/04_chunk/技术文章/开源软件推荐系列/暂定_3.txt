@@ -1,0 +1,27 @@
+---
+title: 记忆管理_3
+tags: [博客文章, 开源软件, 精选]
+category: 学习
+collection: '开源软件推荐系列'
+published: 2026-07-02T23:57:01
+---
+例如：我今天滑雪，很开心->{user}在{date}滑雪。
+注意的是，这个表只储存发生在 create_time 的事情，不会记录“我昨天吃的饭真好吃”（避免事实重复），为了更精确的匹配，这个表会储存的更加细致，例如用户可能会提问：“去年的今天我在做什么呢？”
+
+id
+fact_content
+create_time
+memory_weight
+confidence
+embedding
+
+1
+{user}在{create_time}玩了一整天apex导致忘记了上课。
+2026-07-21
+0.6
+0.95
+...
+
+这有利于ai直接知道最近发生了什么，而不是反复阅读之前的对话窗口。
+Embedding RAG向量数据库：
+会储存Semantic Memory 长期记忆表，People 人物角色表与Reflection AI总结表，有利于检索速度优化。

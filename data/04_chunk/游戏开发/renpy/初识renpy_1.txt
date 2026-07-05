@@ -1,0 +1,72 @@
+---
+title: 初识renpy_1
+published: 2026-02-10T14:12:01
+tags: [博客文章]
+category: '开发日志'
+---
+
+大家好，这里是小琴。
+我参与开发的国产AVG文游 “你是如此特别” （暂称） 在今天正式立项准备参与开发，我也将在这个系列中更新自己的开发日志。
+一切起始之时
+我们尝试一个简单的小游戏：
+label start:
+
+"vilstia" "烧灼，蔓延。"
+
+"yunease" "杀戮，钻孔"
+
+label语句用于给程序中的某个脚本节点命名，在这里是start标签，start标签是特殊标签，也不能删除，程序在开始会直接进入start。这一点有点像webgal的start.txt，反正都是一样的对吧。
+特别一提的是，因为rpy是类python语言，所以对缩进有着严格的要求：
+label scene1:
+//需要四个空格
+"vilstia" "火焰。"
+
+这里的句子缩进后的字符串就是say语句，say语句的旁白这样写：
+label scene2:
+"vilstia" "要我去做什么。"
+//这个就是旁白，没有speaker
+"她要做什么呢？"
+"vilstia" "是，我说过，\"可你情愿看那些灰烬\"?"
+
+就像c语言一样，renpy也有转义字符，因为直接使用 " " 会出现解释错误，因此需要使用反斜杠 \ 来实现转义。
+来到新世界
+宏定义
+如果反复输入角色名，有一点太麻烦了，可以使用宏定义：
+define v = character('vilstia',color="#ffffff")
+define m = character('me',color="#ffffff")
+
+label scene3:
+v "憎恨是水。"
+m "但愿如此。"
+
+这里的 color 有些类似html或是css里的属性，可以使用十六进制表示。
+图像（image）
+我们也需要一些立绘或是背景，请参考如下代码：
+label scene4:
+
+scene bg meadow
+
+"风啊，您就这样吹拂吧。"
+
+"谁也无法拦住您，可是......"
+
+"您要去到哪里去呢？"
+
+show sylvie green smile
+
+在这里的 scene 语句会清除所有图像（这一点和webgal不一样，webgal需要手动清除所有图像），而 show 语句会在背景上显示一个精灵，并且根据预设改变展示。
+在renpy中，每个图像都有一个 tag 和 可选属性 attribute 。这些属性必须满足一般变量的命名规范。
+在上面这个场景中， sence 的 tag 是 bg，属性是 meadow。通常来说，背景图像应该使用 bg 作为 tag 标签。
+而 show 语句中的 tag 是 sylvie ，属性是 green 和 smile 。
+tag 类似 webgal 的 id ，一次只能展示一张带有相同 tag 的图像，当出现新的图像，会直接替换掉原本的图像。
+
+Ren’Py会在images目录下搜索图像文件，可以通过启动器(launcher)的“打开目录”选项里选择“images”完成配置。Ren’Py能使用PNG或者WEBP文件作为角色美术资源，JPG、JPEG、PNG或者WEBP文件作为背景美术资源。文件的命名相当重要，Ren’py将使用除去扩展名后，强制字母变为小写的文件名来作为图象名。
+
+例如，images目录下的这些文件，定义了下列图像：
+
+“bg meadow.jpg” -> bg meadow
+“sylvie green smile.png” -> sylvie green smile
+
+注意 因为文件名会被转换为小写字母。
+
+图像可以被放在images目录的子目录(子文件夹)中。

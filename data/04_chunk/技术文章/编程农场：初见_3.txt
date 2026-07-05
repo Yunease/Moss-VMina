@@ -1,0 +1,48 @@
+---
+title: 编程农场：初见_3
+tags: [python, 游戏]
+category: 学习
+published: 2026-06-11T22:37:27
+---
+
+if y < y_max:
+pass
+
+而第一个版本的代码，每次循环的时候，都会立刻获取一次x和y的位置。并且使用匿名变量，不关心这个变量的变化，因此不受到影响。
+而get size的性能开销，对于这个游戏来说可以完全忽略了。
+附代码：自动化种间种植。
+# 先想办法获得地图的大小
+x_max = get_world_size()
+y_max = get_world_size()
+key = 4
+
+while True:
+for y in range(y_max + 1):
+for x in range(x_max + 1):
+y = get_pos_y()
+x = get_pos_x()
+if x <= key:
+if (x%2) != (y%2):
+if can_harvest():
+harvest()
+plant(Entities.Tree)
+if get_water() < 0.8:
+use_item(Items.Water)
+#elif y%2 == 0:
+#if can_harvest():
+#harvest()
+#plant(Entities.Bush)
+else:
+if can_harvest():
+harvest()
+else:
+if get_ground_type() != Grounds.Soil:
+till()
+if can_harvest():
+harvest()
+plant(Entities.Carrot)
+if get_water() < 0.8:
+use_item(Items.Water)
+move(East)
+if x >= x_max-1:
+move(North)
