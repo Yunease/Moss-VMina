@@ -13,6 +13,9 @@ venv/
 .vscode/
 *.swp
 
+# Local config — per-machine settings, not shared
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
