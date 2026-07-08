@@ -35,3 +35,7 @@ rng_state.pth
 scheduler.pt
 optimizer.pt
 training_args.bin
+
+# Full model directories — downloaded model bodies, not tracked in git
+gemma/
+checkpoint/
