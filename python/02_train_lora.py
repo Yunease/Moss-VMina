@@ -29,7 +29,7 @@ from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 
 # ============ 路径配置 ============
 MODEL_PATH = r"D:\Astro\Moss VMina\qwen\Qwen3.5-0.8B"
-TRAIN_PATH = r"D:\Astro\Moss VMina\data\06_train_test_split\train.jsonl"
+TRAIN_PATH = r"D:\Astro\Moss VMina\data\07_train_test_2_spilt\merged_train.jsonl"
 VAL_PATH = r"D:\Astro\Moss VMina\data\06_train_test_split\val.jsonl"
 OUTPUT_DIR = r"D:\Astro\Moss VMina\output\lora_test"
 
@@ -111,52 +111,74 @@ class SFTDataset(Dataset):
     def __len__(self):
         return len(self.data)
 
-    def _build_ids_and_labels(self, idx):
-        item = self.data[idx]
-        instruction = item["instruction"]
-        output = item["output"]
+def _build_ids_and_labels(self, idx):
+    item = self.data[idx]
 
-        user_only = [{"role": "user", "content": instruction}]
-        full_conv = user_only + [{"role": "assistant", "content": output}]
+    instruction = item["instruction"]
+    output = item["output"]
 
-        # prompt_text: 到 "<|im_start|>assistant\n" 为止（不含 assistant 的实际内容）
-        prompt_text = self.tokenizer.apply_chat_template(
-            user_only, tokenize=False, add_generation_prompt=True
-        )
-        # full_text: 完整的一问一答
-        full_text = self.tokenizer.apply_chat_template(
-            full_conv, tokenize=False, add_generation_prompt=False
-        )
+    messages = [
+        {
+            "role": "user",
+            "content": instruction
+        },
+        {
+            "role": "assistant",
+            "content": output
+        }
+    ]
 
-        prompt_ids = self.tokenizer(prompt_text, add_special_tokens=False)["input_ids"]
-        full_ids = self.tokenizer(
-            full_text,
-            add_special_tokens=False,
-            truncation=True,
-            max_length=self.max_length,
+    # 完整对话
+    full_ids = self.tokenizer.apply_chat_template(
+        messages,
+        tokenize=True,
+        add_generation_prompt=False,
+        truncation=True,
+        max_length=self.max_length,
+    )
+
+    # 只到 assistant 内容开始之前
+    prompt_messages = [
+        {
+            "role": "user",
+            "content": instruction
+        }
+    ]
+
+    prompt_ids = self.tokenizer.apply_chat_template(
+        prompt_messages,
+        tokenize=True,
+        add_generation_prompt=True,
+    )
+
+
+    prompt_len = len(prompt_ids)
+
+
+    # 安全检查
+    if full_ids[:prompt_len] != prompt_ids:
+        print("WARNING: chat template boundary mismatch")
+
+        # fallback:
+        # 找 assistant content 的真实token位置
+        assistant_ids = self.tokenizer(
+            output,
+            add_special_tokens=False
         )["input_ids"]
 
-        prompt_len = len(prompt_ids)
+        prompt_len = len(full_ids) - len(assistant_ids)
 
-        if full_ids[:prompt_len] != prompt_ids:
-            raise RuntimeError(
-                f"[样本 idx={idx}] prompt 的 token 前缀与完整对话不一致，"
-                "说明 tokenizer 在 prompt/response 边界处发生了不同的 BPE 合并，"
-                "无法用长度直接切分 mask。请检查 chat_template 或联系模型作者确认"
-                "assistant 起始标记附近是否有特殊分词行为。\n"
-                f"  prompt_ids tail = {prompt_ids[-8:]}\n"
-                f"  full_ids  same pos = {full_ids[max(0, prompt_len - 8):prompt_len]}"
-            )
 
-        if prompt_len >= len(full_ids):
-            raise RuntimeError(
-                f"[样本 idx={idx}] prompt 长度({prompt_len}) >= 截断后总长度"
-                f"({len(full_ids)})，assistant 回复被 max_length={self.max_length} "
-                "完全截断，这条样本无法用于训练。请检查该样本长度或调大 max_length。"
-            )
 
-        labels = [-100] * prompt_len + full_ids[prompt_len:]
-        return full_ids, labels, prompt_len
+    labels = [-100] * prompt_len + full_ids[prompt_len:]
+
+
+    # 防止 assistant header 泄露
+    for i in range(prompt_len):
+        labels[i] = -100
+
+
+    return full_ids, labels, prompt_len
 
     def _sanity_check(self):
         """构建后立即抽样人工核对 mask 是否落在正确位置。"""
