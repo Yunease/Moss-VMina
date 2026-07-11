@@ -42,3 +42,6 @@ training_args.bin
 # Full model directories — downloaded model bodies, not tracked in git
 gemma/
 checkpoint/
+
+# TTS audio data — large WAV files (~200MB), reference audio & game voice lines, not tracked
+TTS/data/
