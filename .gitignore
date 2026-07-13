@@ -45,3 +45,6 @@ checkpoint/
 
 # TTS audio data — large WAV files (~200MB), reference audio & game voice lines, not tracked
 TTS/data/
+
+# Downloaded LLM models — large files (several GB), download from HuggingFace separately
+qwen/
